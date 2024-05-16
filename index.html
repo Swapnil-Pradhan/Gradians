@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradians AI</title>
+</head>
+
+<link rel="stylesheet" href="stylesheets/styles.css">
+<link rel="stylesheet" href="stylesheets/gradebot.css">
+
+<style>
+  body {
+    width: 99vw;
+    overflow-x: hidden;
+    background-image: radial-gradient(circle at top center, #1e2331 -25%, black) !important;
+    position: absolute;
+    padding-bottom: 2ch;
+}
+</style>
+
+<body bgcolor="black">
+  <br>
+  <button style="float: right" tip="Settings" onclick="setting(false)">⚙️</button>
+  <a style="float: right" tip="Handwriting" href="handwriting.htm">✍🏻</a>
+  <button style="float: right" tip="History">⌛</button>
+  <main>
+    <center>
+      <div id="info">
+        <select id="subject" onchange="pastChoice(this, 'value')" title="Subject">
+          <option value="subject">Auto</option>
+          <optgroup label="Main">
+            <option value="Mathematics">Maths</option>
+            <option value="Science">Science</option>
+          </optgroup>
+          <optgroup label="SST">
+            <option value="Geography">Geography</option>
+            <option value="History">History</option>
+            <option value="Political Science">Civics</option>
+            <option value="Economics">Economics</option>
+          </optgroup>
+          <optgroup label="Language">
+            <option value="Hindi">Hindi</option>
+            <option value="English">English</option>
+          </optgroup>
+          <optgroup label="Optional">
+            <option value="Information Technology">Info. Tech.</option>
+            <option value="Artificial Intelligence">AI</option>
+            <option value="Computer Sciencefire">CS</option>
+          </optgroup>
+        </select>
+        <div id="mm">
+          <input type="range" min="0.5" max="6" step=".5" id="marks" oninput="pastChoice(this, 'tip')"
+            onmouseover="pastChoice(this, 'tip')" onmouseout="document.documentElement.style.setProperty('--thumb', 0)">
+          <span style="display: flex; justify-content: center;">
+            <label>Marks<label></label></span>
+        </div>
+        <br>
+
+      </div>
+    </center>
+
+    <center>
+      <form id="mainForm" onsubmit="return false" class="major">
+        <center id="img"></center>
+        <textarea name="gemini-1.0-pro" placeholder="Type your report..." rows="9" autofocus
+          oninput="hideSubmit(this)"></textarea>
+        <br>
+        <button id="mic" onclick="stt()" tip="Speak your report">🎙️</button>
+        <button onclick="document.querySelector(`input[type='file']`).click()" id="fakeBtn" tip="Image Upload"
+          before="📃">Upload</button>
+        <button type="submit" class="scale0" id="ansSubmit" tip="Send">⬇️</button>
+
+        <input class="hide" type="file" id="qna" multiple onchange="imgFiles(event)"
+          accept="image/png, image/jpeg, image/webp, image/heic, image/heif">
+      </form>
+    </center>
+
+    <center id="loading" class="scale0">
+      <span class="ball"></span>
+      <span class="ball"></span>
+      <span class="ball"></span>
+      <span class="ball"></span>
+      <span class="ball"></span>
+      <span class="ball"></span>
+      <span class="ball"></span>
+    </center>
+
+    <center>
+      <section class="major scale0" id="response" style="user-select: auto;"></section>
+    </center>
+
+  </main>
+  <nav tabindex="0">
+    <center>
+      <h1><button tip="Delete History" class="scale0">🗑️</button> History⏳</h1>
+    </center>
+    <hr>
+    <div></div>
+  </nav>
+
+  <section id="blurscreen">
+    <div onclick="setting(true)" class="area"></div>
+
+    <dialog>
+      <fieldset>
+        <legend>
+          <h3>Basic</h3>
+        </legend>
+        <label for="grade">Grade:</label>
+        <input id="grade" type="range" min="6" max="12" oninput="pastChoice(this, 'tip')"
+          onmouseover="pastChoice(this, 'tip')" onmouseout="document.documentElement.style.setProperty('--thumb', 0)">
+
+        <label>Custom Sub: </label>
+        <input type="text" id="cSubject" placeholder="Comma separated values" onchange="pastChoice(this, 'value')">
+      </fieldset>
+
+      <fieldset>
+        <legend>
+          <h3>Account</h3>
+        </legend>
+        <label>Name:</label><input type="text" name="name" autocomplete="name" placeholder="Your name..." id="newName">
+        <label>Email:</label><input type="email" name="email" autocomplete="email" placeholder="Your email..."
+          id="newMail">
+        <br>
+        <div class="actionBtns" style="grid-column: span 2">
+          <button id="resetPass" before="♻️">Reset Password</button>
+          <button id="signOut" before="❌">Sign Out</button>
+          <button id="deleteAcc" before="💀">Delete Account</button>
+        </div>
+      </fieldset>
+    </dialog>
+  </section>
+
+  <button id="tts" onclick="txt2speech(textarea.value)" class="scale0" tip="Text to speech">🗣️</button>
+
+  <div id="sign">
+    <fieldset dir="rtl" id="signin" tabindex="0">
+      <legend onclick="loginForm(document.getElementById('signin'), document.getElementById('register'))">Sign In
+      </legend>
+      <form>
+        <input type="email" placeholder="E-mail" name="email" title="Your registered email" required>
+        <input type="password" pa placeholder="Password" name="current-password" autocomplete="off"
+          title="Your Gradians password" required>
+        <span dir="ltr"><button type="submit" value="Sign up" before="📥"
+            tip="Leave password for password-less sign in">Log In</button><button type="reset"
+            tip="Clear form">🗑️</button></span>
+      </form>
+    </fieldset>
+    <fieldset id="register" tabindex="0">
+      <legend onclick="loginForm(document.getElementById('register'), document.getElementById('signin'))">Register
+      </legend>
+      <form onsubmit="return false;" autocomplete="on" id="createUser">
+        <input type="text" placeholder="Name" name="name" title="Your display name" required>
+        <input type="email" placeholder="E-mail" name="email" title="A working email" required>
+        <input type="password" placeholder="Password" name="new-password" autocomplete="off"
+          title="8 characters, a number, an uppercase, a lower case & a special character">
+        <input type="password" placeholder="Confirm password" name="new-password" autocomplete="off"
+          title="Type your password again"><br>
+        <span><button type="submit" value="Sign up" before="📥"
+            tip="Leave password for password-less registeration">Sign Up</button><button type="reset"
+            tip="Clear form">🗑️</button></span>
+      </form>
+    </fieldset>
+    <div class="actionBtns loginBtns">
+      <button id="google"><sub><img src="icons/google.svg" alt="Google"></sub> Google</button>
+      <button id="microsoft"
+        style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;"><sub><img
+            src="icons/microsoft.svg" alt="Microsoft"></sub> Microsoft</button>
+      <button id="github" style="font-family: Consolas;"><sub><img src="icons/github.svg" alt="GitHub"></sub>
+        GitHub</button>
+      <button id="x" style="font-family: 'Times New Roman', Times, serif; z-index: 1;"
+        tip="X (Twitter) Login">✖️</button>
+      <button id="yahoo" before="y!" style="font-weight: bolder;"> Yahoo</button>
+      <button id="guest" before="👤" tip="Account will be deleted after 2 days">Guest Login</button>
+      <button before="🥸" tip="Everything will be deleted as you leave"
+        onclick="sign.style.display='none'">Incognito</button>
+    </div>
+  </div>
+  <section id="offline">
+    <span>
+      <ul><small>No Internet</small></ul>
+      <ul>No Internet</ul>
+      <ul><big>No Internet</big></ul>
+      <ul class="bold">No Internet</ul>
+      <ul><big>No Internet</big></ul>
+      <ul>No Internet</ul>
+      <ul><small>No Internet</small></ul>
+    </span>
+  </section>
+  <script src="scripts/gradebot.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+  </script>
+
+  <script type="module" src="scripts/firebase.js"></script>
+  <script type="module" src="scripts/gemini.js"></script>
+</body>
+</html>

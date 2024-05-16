@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gradians Handwriting</title>
+  <link href="stylesheets/styles.css" rel="stylesheet">
+  <link href="stylesheets/handwriting.css" rel="stylesheet">
+</head>
+
+<body bgcolor="black">
+  <a href="index.html?settings" style="position: fixed; top: 1vw; right: 1vw;" tip="Settings">⚙️</a>
+  <section>
+    <div>
+      <span id="dropbox">
+        <span>Drop it here!</span>
+        <small>Upload your</small><big>&nbsp;Handwriting</big>
+      </span>
+    </div>
+    <div id="response-parent">
+      <div id="response"></div>
+      <br>
+      <button before="🔄" id="regenerate">Re - generate</button>
+    </div>
+  </section>
+
+
+  <input class="hide" type="file" id="qna" accept="image/png, image/jpeg, image/webp, image/heic, image/heif">
+  <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+  <script src="scripts/handwriting.js" type="module"></script>
+</body>
+
+</html>
