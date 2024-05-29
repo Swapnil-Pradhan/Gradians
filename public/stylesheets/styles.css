@@ -1,0 +1,227 @@
+@font-face {
+    font-family: product;
+    src: url("product.ttf");
+}
+
+* {
+    transition: .4s;
+    color: white;
+    font-family: product;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.hide {
+    display: none;
+}
+
+button,
+input:not(input[type="range"]),
+textarea,
+select {
+    background: transparent;
+    outline: none;
+    cursor: pointer;
+    font-size: large;
+}
+
+input,
+button,
+select, a {
+    border-radius: 69px;
+    border: .1px solid lightslategrey;
+    padding: 8px;
+    background-color: black;
+    user-select: none;
+    text-align: center;
+    margin-right: 1ch;
+    text-decoration: none;
+}
+
+.hover,
+.glow, button:hover, a:hover {
+    background-color: snow !important;
+    scale: 1.1;
+    color: black;
+    box-shadow: rgba(255, 255, 255, .5) 0 0 15px;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active,
+button:active,
+select:active {
+    scale: .9;
+    transition: 0.2s;
+    transition-timing-function: ease-out;
+    opacity: 1;
+}
+
+textarea {
+    max-width: 99%;
+    min-width: 99%;
+    min-height: 6.9ch;
+    max-height: 69vh;
+    cursor: text;
+    border-radius: 23px;
+    margin: 1ch 0 1ch 0;
+    padding: 1ch 0 0 1ch;
+    background-color: rgba(255, 255, 255, .1);
+    transition-timing-function: ease-out;
+}
+
+.scale0 {
+    opacity: 0;
+    scale: 0;
+}
+
+option {
+    background-color: black;
+}
+
+:root{
+    --thumb: 0;
+}
+
+[tip]{
+    position: relative;
+}
+
+[tip]::after {
+    transition: .1s ease-out;
+    content: attr(tip);
+    position: absolute;
+    top: 111%;
+    color: rgb(29, 21, 29);
+    padding: .5ch;
+    font-size: small;
+    width: max-content;
+    min-width: 2ch;
+    text-align: center;
+    border-radius: 69px;
+    box-shadow: 0px 0px 15px black;
+    background-color: plum;
+    scale: .7;
+    opacity: 0;
+    left: var(--thumb);
+    font-family: product;
+}
+
+[tip]:hover::after {
+    scale: 1;
+    opacity: 1;
+}
+
+[before]::before {
+    content: attr(before);
+    display: inline-block;
+    transition: .3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    aspect-ratio: 1/1;
+    width: 1.5em;
+    border-radius: 69px;
+}
+
+[before]:hover::before,
+button:hover img {
+    transform: translateX(-50%);
+    background-color: snow;
+    scale: 1.2;
+    box-shadow: snow 0px 0px 12px;
+}
+
+nav {
+    min-width: 4cm;
+    width: 75vw;
+    max-width: 9cm;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(30, 50, 50, 0.8);
+    backdrop-filter: blur(9px);
+-webkit-backdrop-filter: blur(69px);
+    translate: -100% 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.pouch {
+    margin: .7ch;
+    padding: .7ch;
+    border-radius: 12px;
+    background-color: #151b21;
+    width: calc(100% - 2.8ch);
+    transition: .2s;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+    animation: appear 1s forwards;
+    opacity: 0;
+    scale: .5;
+    translate: -100% 0;
+}
+
+@keyframes appear {
+    to {
+        opacity: 1;
+        scale: 1;
+        translate: 0 0;
+    }
+}
+
+.pouch:hover {
+    padding: 1.2ch .7ch 1.2ch .7ch;
+    background-color: #303d4d;
+    z-index: 2;
+    border-radius: 3ch;
+}
+
+.pouch:active {
+    scale: .96;
+}
+
+time {
+    color: #b9d6fc;
+    font-size: small;
+    position: absolute;
+    right: 0;
+    background-color: rgba(48, 77, 77, .5);
+    backdrop-filter: blur(69px);
+-webkit-backdrop-filter: blur(69px);
+    border-radius: 69px 0 0 69px;
+    padding: .5ch;
+    box-shadow: #151b21 0 0 15px 18px;
+}
+
+[tip="History"]:focus-within ~ nav,
+nav:focus-within {
+    translate: 0 0;
+}
+
+[tip="Delete History"] {
+    position: absolute;
+    left: 1ch;
+    top: 1ch;
+    z-index: 1;
+}
+
+@media all and (orientation: landscape) {
+    main {
+        margin-left: clamp(4cm, 75vw, 9cm);
+    }
+
+    [tip="History"] {
+        scale: 0;
+    }
+
+    nav {
+        translate: 0 0;
+    }
+
+    #offline span {
+        scale: 5;
+    }
+
+    .major {
+        margin: 2vh 9vh 3vh 9vh;
+    }
+}
